@@ -1,5 +1,5 @@
-import { NativeModules } from 'react-native';
+import {NativeModules} from 'react-native';
 
-const { Dp3tSdkReactNative } = NativeModules;
+const {RNDP3TSDK} = NativeModules;
 
-export default Dp3tSdkReactNative;
+export default RNDP3TSDK;
