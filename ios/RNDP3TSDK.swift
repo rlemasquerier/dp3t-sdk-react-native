@@ -39,11 +39,26 @@ class RNDP3TSDK: NSObject {
         resolver(true)
     }
     
+    /// Triggers sync with the backend to refresh the exposed list
+    /// - Parameter callback: callback
+    @objc
+    func sync(_ resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) -> Void {
+        DP3TTracing.sync { syncResponse in
+            do {
+                try syncResponse.get()
+                resolver(true)
+            } catch {
+                print("Could not sync tracing with backend")
+                rejecter("DP3TSDK", "Could not sync tracing with backend: \(error.localizedDescription)", error)
+            }
+        }
+    }
+    
     /// get the current status of the SDK
     /// - Parameter callback: callback
     @objc
     func status(_ resolver: RCTPromiseResolveBlock, rejecter: RCTPromiseRejectBlock) -> Void {
-        DP3TTracing.status(callback: { statusResponse in
+        DP3TTracing.status { statusResponse in
             do {
                 let tracingStatus = try statusResponse.get()
                 var rnStatus: [String:Any] = [:]
@@ -61,12 +76,12 @@ class RNDP3TSDK: NSObject {
                     break
                 }
                 resolver(rnStatus)
-            
+                
             } catch {
                 print("Could not get tracing status")
                 rejecter("DP3TSDK", "Could not get tracing status", error)
             }
-        })
+        }
     }
     
     @objc
