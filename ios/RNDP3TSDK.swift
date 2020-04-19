@@ -39,6 +39,36 @@ class RNDP3TSDK: NSObject {
         resolver(true)
     }
     
+    /// get the current status of the SDK
+    /// - Parameter callback: callback
+    @objc
+    func status(_ resolver: RCTPromiseResolveBlock, rejecter: RCTPromiseRejectBlock) -> Void {
+        DP3TTracing.status(callback: { statusResponse in
+            do {
+                let tracingStatus = try statusResponse.get()
+                var rnStatus: [String:Any] = [:]
+                rnStatus["lastSync"] = tracingStatus.lastSync?.description
+                rnStatus["numberOfHandshakes"] = tracingStatus.numberOfHandshakes
+                switch(tracingStatus.infectionStatus) {
+                case .exposed:
+                    rnStatus["infectionStatus"] = "exposed"
+                    break
+                case .healthy:
+                    rnStatus["infectionStatus"] = "healthy"
+                    break
+                case .infected:
+                    rnStatus["infectionStatus"] = "infected"
+                    break
+                }
+                resolver(rnStatus)
+            
+            } catch {
+                print("Could not get tracing status")
+                rejecter("DP3TSDK", "Could not get tracing status", error)
+            }
+        })
+    }
+    
     @objc
     static func requiresMainQueueSetup() -> Bool {
         return true

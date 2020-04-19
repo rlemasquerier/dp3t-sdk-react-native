@@ -16,4 +16,6 @@ RCT_EXTERN_METHOD(startTracing:(RCTPromiseResolveBlock)resolve rejecter:(RCTProm
 
 RCT_EXTERN_METHOD(stopTracing:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(status:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+
 @end

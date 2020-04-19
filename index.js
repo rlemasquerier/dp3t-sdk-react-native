@@ -6,6 +6,7 @@ const dp3t = {
   initialize: RNDP3TSDK.initialize,
   startTracing: RNDP3TSDK.startTracing,
   stopTracing: RNDP3TSDK.stopTracing,
+  status: RNDP3TSDK.status,
 };
 
 export default dp3t;
