@@ -23,6 +23,23 @@ class RNDP3TSDK: NSObject {
     }
     
     @objc
+    func startTracing(_ resolver: RCTPromiseResolveBlock, rejecter: RCTPromiseRejectBlock) -> Void {
+        do {
+            try DP3TTracing.startTracing()
+            resolver(true)
+        } catch {
+            print("DP3TSDK start tracing error: \(error.localizedDescription)")
+            rejecter("DP3TSDK", "DP3TSDK initialization error", error)
+        }
+    }
+    
+    @objc
+    func stopTracing(_ resolver: RCTPromiseResolveBlock, rejecter: RCTPromiseRejectBlock) -> Void {
+        DP3TTracing.stopTracing()
+        resolver(true)
+    }
+    
+    @objc
     static func requiresMainQueueSetup() -> Bool {
         return true
     }
