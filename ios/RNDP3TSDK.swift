@@ -83,6 +83,27 @@ class RNDP3TSDK: NSObject {
             }
         }
     }
+
+    @objc
+    func iWasExposed(_ dateString: String, authString: String,  resolver: @escaping RCTPromiseResolveBlock,  rejecter: @escaping RCTPromiseRejectBlock) -> Void {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let nullableDate = dateFormatter.date(from: dateString)
+        
+        guard let date = nullableDate else {
+            rejecter("DP3TSDK", "Date parsing error", RNDP3TError.dateParsing(dateString))
+            return
+        }
+        DP3TTracing.iWasExposed(onset: date, authString: authString) { result in
+            do {
+                try result.get()
+                resolver(true)
+            } catch {
+                print("Could not send I was exposed")
+                rejecter("DP3TSDK", "Could not send I was exposed", error)
+            }
+        }
+    }
     
     @objc
     static func requiresMainQueueSetup() -> Bool {

@@ -1,6 +1,6 @@
-import {NativeModules} from 'react-native';
+import { NativeModules } from "react-native";
 
-const {RNDP3TSDK} = NativeModules;
+const { RNDP3TSDK } = NativeModules;
 
 const dp3t = {
   initialize: RNDP3TSDK.initialize,
@@ -8,6 +8,7 @@ const dp3t = {
   stopTracing: RNDP3TSDK.stopTracing,
   status: RNDP3TSDK.status,
   sync: RNDP3TSDK.sync,
+  iWasExposed: RNDP3TSDK.iWasExposed,
 };
 
 export default dp3t;
