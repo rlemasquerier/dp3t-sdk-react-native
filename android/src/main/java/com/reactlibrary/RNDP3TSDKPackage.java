@@ -10,10 +10,10 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
 
-public class Dp3tSdkReactNativePackage implements ReactPackage {
+public class RNDP3TSDKPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Arrays.<NativeModule>asList(new Dp3tSdkReactNativeModule(reactContext));
+        return Arrays.<NativeModule>asList(new RNDP3TSDKModule(reactContext));
     }
 
     @Override
